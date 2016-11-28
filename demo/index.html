@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="da" style="font-size: 100%">
+<head>
+	<title>fcoo.dk - jquery-value-format - Demo</title>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv='x-dns-prefetch-control' content='on'>
+
+	<meta name='copyright' content='FCOO'>
+	<meta name='owner' content='FCOO'>
+
+  <link  href="bower_components.css" rel="stylesheet">	
+  <link  href="../src/jquery-value-format.css" rel="stylesheet">	
+</head>
+
+<body>
+
+<div id="test1"   data-vf-value="1" data-vf-format="TEST">Original 1</div>
+<div id="test2"   data-vf-value="2" data-vf-format="TEST">Original 2</div>
+<div              data-vf-value="3" data-vf-format="TEST">Original 3</div>
+<div id="object1"></div>
+<div id="date1"></div>
+	
+	
+	<script src="bower_components.js"></script>
+	<script src="../src/jquery-value-format.js"></script>
+	<script>
+        (function ($, window) {
+
+            $.valueFormat
+                .add({ 
+                    id: 'DATE', 
+                    format: function( value ){
+                        return 'Current time = ' + value.date.toString();
+                    }
+                })
+                .add({ 
+                    id: 'OBJECT', 
+                    format: function( value ){
+                        return 'Value = ' + value.value;
+                    }
+                })
+                .add({ 
+                    id: 'TEST', 
+                    format: function( value ){
+                        return 'Dette er en test = ' + value;
+                    }
+                })
+                .add({ 
+                    id: 'TEST2', 
+                    format: function( value ){
+                        return '<em>Dette er format TEST2 = ' + value + '</em>';
+                    }
+                });
+
+            $('#test1').vfValue('Nu bliver det spændende...');
+            $('#test2').vfFormat('TEST2');
+            var m = { value: 12345 };
+            $('#object1')
+                .vfFormat('OBJECT')
+                .vfValue( m );
+
+            var d = {date: new Date()};
+            $('#date1')
+                .vfFormat('DATE')
+                .vfValue( d );
+
+            setInterval( function(){
+                d.date = new Date();
+                $.valueFormat.update('DATE');
+            }, 1000);
+        
+        }(jQuery, this, document));
+	</script>
+</body>
+</html>
