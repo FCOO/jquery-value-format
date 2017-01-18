@@ -62,14 +62,18 @@ Add a new format.
 Updates all elements with format-id == `id`
 
 ### Update, adding format, value and options to element 
-#### `jQuery.fn.vfFormat( id )`
+
+#### `jQuery.fn.vfFormat( id, options )`
 Sets the format of the selected elements and update them
 
-#### `jQuery.fn.vfValue( value )`
+#### `jQuery.fn.vfValue( value, options )`
 Sets the value of the selected elements and update them
 
 #### `jQuery.fn.vfOptions( options )`
 Sets the options of the selected elements and update them
+
+#### `jQuery.fn.vfValueFormat( value, id,  options )`
+Sets the value and format of the selected elements and update them
 
 #### `jQuery.fn.vfUpdate()`
 Update the selected elements 
@@ -82,5 +86,5 @@ Copyright (c) 2016 [FCOO](https://github.com/FCOO)
 
 ## Contact information
 
-NielsHolt nho@fcoo.dk
+Niels Holt nho@fcoo.dk
 

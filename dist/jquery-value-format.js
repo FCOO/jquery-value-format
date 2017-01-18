@@ -49,13 +49,17 @@
 
    
     //*********************************************************************
-    //jQuery.fn.vfFormat( id ): Sets the format of the selected elements and update them
-	$.fn.vfFormat = function( id ) {
+    //jQuery.fn.vfFormat( id, options ): Sets the format of the selected elements and update them
+	$.fn.vfFormat = function( id, options, dontUpdate ) {
+        if (options)
+            this.vfOptions( options, true );
 		return this.each(function() {
-            $(this)
+            var $this = $(this);
+            $this
                 .attr( 'data-'+dataId_format, id ) //Allow the element to be 'found' by $.valueFormat.update
-                .data( dataId_format, id )
-                ._vfUpdate();
+                .data( dataId_format, id );
+            if (!dontUpdate)
+                $this._vfUpdate();
 		});
 	};
 
@@ -63,7 +67,7 @@
     //jQuery.fn.vfValue( value ): Sets the value of the selected elements and update them
 	$.fn.vfValue = function( value, options ) {
         if (options)
-            this.vfOptions( options );
+            this.vfOptions( options, true );
 		return this.each(function() {
             var $this = $(this),
                 format = $this._vfGetFormat();
@@ -75,14 +79,23 @@
 
     //*********************************************************************
     //jQuery.fn.vfOptions( options ): Sets the options of the selected elements and update them
-	$.fn.vfOptions = function( options ) {
+	$.fn.vfOptions = function( options, dontUpdate ) {
 		return this.each(function() {
-            $(this)
-                .data( dataId_options, options )
-                ._vfUpdate();
+            var $this = $(this);
+            $this.data( dataId_options, options );
+            if (!dontUpdate)
+                $this._vfUpdate();
 		});
 	};
 
+    //*********************************************************************
+    //jQuery.fn.vfValueFormat( value, id,  options ): Sets the value and format of the selected elements and update them
+	$.fn.vfValueFormat = function( value, id,  options ) {
+        return this
+                 .vfFormat( id, options, true )
+                 .vfValue( value );
+    };
+    
     //*********************************************************************
     //jQuery.fn.vfUpdate(): Update the selected elements 
 	$.fn.vfUpdate = function() {
