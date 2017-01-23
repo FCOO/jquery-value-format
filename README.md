@@ -14,21 +14,19 @@ A *"format"* is defined by an id and a format-function `function( value )` that 
 http://FCOO.github.io/jquery-value-format/demo/ 
 
 ## Usage
-### Adding `data-` directly to elements
-	//HTML
-	<div id="test1" data-vf-value="This is the value" data-vf-format="myFormat">This will be replaced</div>
-
+### Defining a format
 	//Javascript
 	$.valueFormat
 	  .add({ 
 	    id: 'myFormat', 
-	    format: function( value ){
-	      return "Before " + value + " Behinde";
+	    format: function( value, options ){
+	      return (options.before || "Before ") + value + " Behinde";
 	    }
 	});
 
+### Adding `data-` directly to elements
 	//HTML
-	<div id="test1" data-vf-value="This is the value" data-vf-format="myFormat">Before This is the value Behinde</div>
+	<div id="test1" data-vf-value="This is the value" data-vf-format="myFormat" data-vf-options="{'before':'My before '}">This will be replaced</div>
 
 ### Using only jQuery
 	//HTML
@@ -38,6 +36,7 @@ http://FCOO.github.io/jquery-value-format/demo/
 	$.valueFormat.add(...);
 	$('#test1')
 	  .vfValue("This is the value")
+	  .vfOptions({before:"My before "})
 	  .vfFormat("myFormat");
 
 

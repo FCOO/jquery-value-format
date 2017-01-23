@@ -116,10 +116,26 @@
     $.fn._vfUpdate = function() {
         var format = this._vfGetFormat(),
             value = this.data( dataId_value ),
-            options = this.data( dataId_options );
+            options = this.data( dataId_options ) || {};
+
+        //Convert options (if any) from string to json-object 
+        if (options && ($.type(options) == 'string') ){
+            options = options.split("'").join('"');
+            try {
+                var newOptions = JSON.parse( options );
+                if ($.type( newOptions ) == 'object')
+                    options = newOptions;
+            }
+            catch (e) { 
+                options = null;
+            }
+        }
+
+
         if (value !== undefined)
             this.html( format.format( value, options ) );
     };
+
 
 	/******************************************
 	Initialize/ready 
