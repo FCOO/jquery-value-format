@@ -41,9 +41,14 @@
     };
 
     //*********************************************************************
-    //jQuery.valueFormat.update: update all elements with data-vf-format == id
-	$.valueFormat.update = function( id ){
-        $('*[data-'+dataId_format+'="' + id + '"]').vfUpdate();
+    //jQuery.valueFormat.update: update all elements with data-vf-format == ids or part of ids
+	$.valueFormat.update = function( ids ){
+        ids = ids.split(' ');
+        for (var i=0; i<ids.length; i++ ){
+            var id = ids[i];
+            if (id)
+                $('*[data-'+dataId_format+'="' + id + '"]').vfUpdate();
+        }
         return this;
     };
 

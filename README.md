@@ -57,8 +57,8 @@ Add a new format.
 `convert( value )` converts a input-object/value to the value stored and used to format
 
 
-#### `jQuery.valueFormat.update( id )`
-Updates all elements with format-id == `id`
+#### `jQuery.valueFormat.update( ids )`
+Updates all elements with format-id == `ids` or part of `ids`
 
 ### Update, adding format, value and options to element 
 
