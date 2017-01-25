@@ -50,7 +50,7 @@
                 .add({ 
                     id: 'TEST', 
                     format: function( value ){
-                        return 'Dette er en test = ' + value;
+                        return value;
                     }
                 })
                 .add({ 
@@ -82,9 +82,8 @@
                 d.date = new Date();
                 $.valueFormat.update('DATE SOMETHING_ELSE');
             }, 1000);
-        
 
-            $('<div></div>').vfValueFormat('Dette er en tekst', 'TEST').appendTo( $('body') );
+            $('<div></div>').vfValueFormat('dette er en tekst', 'TEST', {prefix:'>>', postfix:'<<', capitalize: false, capitalizeFirstLetter: true}).appendTo( $('body') );
         }(jQuery, this, document));
 	</script>
 </body>

@@ -145,8 +145,22 @@
             options = this._vfGetOptions(),
             value = format.convertBack( this.data( dataId_value ), options );
 
-        if (value !== undefined)
-            this.html( format.format( value, options ) );
+        if (value !== undefined){
+            value = format.format( value, options );
+
+            //Adjust value according to options
+            if (options.capitalize)
+                value = value.toUpperCase();
+
+            if (options.capitalizeFirstLetter)
+                value = value.charAt(0).toUpperCase() + value.slice(1);
+            
+            //prefix, postfix
+            value = (options.prefix ? options.prefix : '') + value + (options.postfix ? options.postfix : '');
+
+
+            this.html( value  );
+        }
     };
 
 

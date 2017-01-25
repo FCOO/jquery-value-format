@@ -80,6 +80,13 @@ Sets the value and format of the selected elements and update them
 #### `jQuery.fn.vfUpdate()`
 Update the selected elements 
 
+#### `options`
+The following standard options in `jQuery.fn.vfFormat, jQuery.fn.vfValue, etc.` are supported
+- `capitalize {Boolean}` - `"this is a test"` => `"THIS IS A TEST"`
+- `capitalizeFirstLetter {Boolean}` - `"this is a test"` => `"This is a test"`
+- `prefix {String}` - `"("` + `"this is a test"` => `"(this is a test"`
+- `postfix {String}` - `")"` + `"this is a test"` => `"this is a test)"`
+
 
 ## Copyright and License
 This plugin is licensed under the [MIT license](https://github.com/FCOO/jquery-value-format/LICENSE).
