@@ -17,6 +17,7 @@
 <div id="test2"   data-vf-value="2" data-vf-format="TEST">Original 2</div>
 <div              data-vf-value="3" data-vf-format="TEST">Original 3</div>
 <div id="object1"></div>
+<div id="object2" data-vf-format="OBJECT_VALUE"></div>
 <div id="date1"></div>
 	
 	
@@ -39,6 +40,14 @@
                     }
                 })
                 .add({ 
+                    id: 'OBJECT_VALUE', 
+                    convert: function( obj ){ return obj.value },
+                    convertBack: function( value ){ return {value: value} },
+                    format: function( obj ){
+                        return 'obj.value = ' + obj.value;
+                    }
+                })
+                .add({ 
                     id: 'TEST', 
                     format: function( value ){
                         return 'Dette er en test = ' + value;
@@ -57,7 +66,13 @@
             $('#object1')
                 .vfFormat('OBJECT')
                 .vfValue( m );
+            $('#object2')
+                .vfValue( m );
 
+            m.value = 54321;
+            $('#object1').vfUpdate();
+            $('#object2').vfUpdate();
+            
             var d = {date: new Date()};
             $('#date1')
                 .vfFormat('DATE')

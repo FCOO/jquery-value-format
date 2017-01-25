@@ -19,9 +19,10 @@
     function defaultConvert( value ){ return value; }
 
     var fallbackFormat = {
-            id     : 'dummy',
-            convert: defaultConvert,
-            format : function( value /*, options */) { return '** UNKNOWN FORMAT FOR "' + value + '" **'; }
+            id         : 'dummy',
+            convert    : defaultConvert,
+            convertBack: defaultConvert,
+            format     : function( value /*, options */) { return '** UNKNOWN FORMAT FOR "' + value + '" **'; }
         };
         
     //Create valueFormat-namespace
@@ -33,6 +34,7 @@
         this.formats = this.formats || {};
 
         options.convert = options.convert || defaultConvert;
+        options.convertBack = options.convertBack || defaultConvert;
         options.format = options.format || defaultConvert;
 
         this.formats[options.id] = options;
@@ -120,7 +122,7 @@
     //jQuery.fn._vfUpdate()
     $.fn._vfUpdate = function() {
         var format = this._vfGetFormat(),
-            value = this.data( dataId_value ),
+            value = format.convertBack( this.data( dataId_value ) ),
             options = this.data( dataId_options ) || {};
 
         //Convert options (if any) from string to json-object 
