@@ -77,9 +77,10 @@
             this.vfOptions( options, true );
 		return this.each(function() {
             var $this = $(this),
-                format = $this._vfGetFormat();
+                format = $this._vfGetFormat(),
+                options = $this._vfGetOptions();
             $this
-                .data( dataId_value, format.convert( value ) )
+                .data( dataId_value, format.convert( value, options ) )
                 ._vfUpdate();
 		});
 	};
@@ -119,11 +120,9 @@
         return $.valueFormat.formats && formatId ? $.valueFormat.formats[formatId] || fallbackFormat : fallbackFormat;
     };
 
-    //jQuery.fn._vfUpdate()
-    $.fn._vfUpdate = function() {
-        var format = this._vfGetFormat(),
-            value = format.convertBack( this.data( dataId_value ) ),
-            options = this.data( dataId_options ) || {};
+    //jQuery.fn._vfGetOptions()
+    $.fn._vfGetOptions = function() {
+        var options = this.data( dataId_options ) || {};
 
         //Convert options (if any) from string to json-object 
         if (options && ($.type(options) == 'string') ){
@@ -137,7 +136,14 @@
                 options = null;
             }
         }
+        return options;
+    };
 
+    //jQuery.fn._vfUpdate()
+    $.fn._vfUpdate = function() {
+        var format = this._vfGetFormat(),
+            options = this._vfGetOptions(),
+            value = format.convertBack( this.data( dataId_value ), options );
 
         if (value !== undefined)
             this.html( format.format( value, options ) );

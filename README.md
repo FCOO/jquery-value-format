@@ -49,14 +49,14 @@ Add a new format.
 	options = {
 	  id: {STRING}, 
 	  format: {function( value, options )},
-	  convert: {function( value )} (optional)
-	  convertBack: {function( value )} (optional)
+	  convert: {function( value, options )} (optional)
+	  convertBack: {function( value, options )} (optional)
 	}
 
 
 `format( value, options )` returns a string or a number or a jQuery-element to be inserted
-`convert( value )` converts a input-object/value to the value stored
-`convertBack( value )` converts the value stored to the value used for format
+`convert( value, options )` converts a input-object/value to the value stored
+`convertBack( value, options )` converts the value stored to the value used for format
 
 `convert` and `convertBack` can be used to convert `object` to e.g. `string` and convert back to `object` before formatting the object.
 
