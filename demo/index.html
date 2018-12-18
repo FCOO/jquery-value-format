@@ -29,9 +29,6 @@
 
             var $container = $('#container');
 
-//$container.detach();
-//console.log( $container.find('*') );
-
             $.valueFormat
                 .add({
                     id: 'DATE',
@@ -87,14 +84,17 @@
                 .vfFormat('DATE')
                 .vfValue( d );
 
-//$container.appendTo( $('body'));
-//$container.vfUpdate();
-/*
+            $container.detach();
+            $container.vfUpdateChildren();
+            $container.appendTo( $('body'));
+
+
+            $.valueFormat.update('FINDES-IKKE DATE TEST2');
+
             setInterval( function(){
-                d.date = new Date();
-                $.valueFormat.update('DATE SOMETHING_ELSE');
+                $('#date1').vfValue( new Date() );
             }, 1000);
-*/
+
             $('<div></div>').vfValueFormat('dette er en tekst', 'TEST', {prefix:'prefix-- ', postfix:' --postfix', capitalize: false, capitalizeFirstLetter: true}).appendTo( $('body') );
         }(jQuery, this, document));
 	</script>

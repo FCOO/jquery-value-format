@@ -44,11 +44,16 @@
 
     //*********************************************************************
     //jQuery.valueFormat.update: update all elements with data-vf-format == ids or part of ids
-	$.valueFormat.update = function( ids ){
+	$.valueFormat.update = function( ids, $parentElement ){
+        var selector = '',
+            _this = this;
         $.each(ids.split(' '), function(index, id){
-            if (id)
-                $('*[data-'+dataId_format+'="' + id + '"]').vfUpdate();
+            if (id && _this.formats && _this.formats[id])
+                selector = selector + (selector ? ',':'') + '*[data-'+dataId_format+'="' + id + '"]';
         });
+
+        var $result = $parentElement ? $parentElement.find(selector) : $(selector);
+        $result.each( function(){ $(this).vfUpdate(); });
         return this;
     };
 
@@ -61,7 +66,6 @@
 		return this.each(function() {
             var $this = $(this);
             $this.attr( 'data-'+dataId_format, id );
-//HER            $this.data( dataId_format, id );
             if (!dontUpdate)
                 $this._vfUpdate();
 		});
@@ -77,9 +81,7 @@
                 format = $this._vfGetFormat(),
                 options = $this._vfGetOptions();
 
-//HERconsole.log('vfValue', value, JSON.stringify( format.convert( value, options ) ) );
             $this
-//HER               .data( dataId_value, format.convert( value, options ) )
                 .attr( 'data-'+dataId_value, JSON.stringify( format.convert( value, options ) ) )
                 ._vfUpdate();
 		});
@@ -90,7 +92,6 @@
 	$.fn.vfOptions = function( options, dontUpdate ) {
 		return this.each(function() {
             var $this = $(this);
-//HER            $this.data( dataId_options, options );
             $this.attr( 'data-'+dataId_options, JSON.stringify(options) );
 
             if (!dontUpdate)
@@ -110,50 +111,33 @@
     //jQuery.fn.vfUpdate(): Update the selected elements
 	$.fn.vfUpdate = function() {
 		return this.each(function() {
-            $( this )._vfUpdate();
+            $(this)._vfUpdate();
 		});
+	};
+
+    //*********************************************************************
+    //jQuery.fn.vfUpdateChildren(): Update the selected elements children
+	$.fn.vfUpdateChildren = function() {
+        return this.find('*').vfUpdate();
 	};
 
     //*********************************************************************
     //Internal methods
     //jQuery.fn._vfGetFormat()
     $.fn._vfGetFormat = function() {
-//HER        var formatId = this.data( dataId_format );
         var formatId = this.attr( 'data-'+dataId_format );
         return $.valueFormat.formats && formatId ? $.valueFormat.formats[formatId] || fallbackFormat : fallbackFormat;
     };
 
     //jQuery.fn._vfGetOptions()
     $.fn._vfGetOptions = function() {
-
-        var options = JSON.parse( this.attr('data-'+dataId_options ) || '""' );
-//HERconsole.log('_vfGetOptions',  options );
-        return options;
-/*HER
-        var options = this.data( dataId_options ) || {};
-
-        //Convert options (if any) from string to json-object
-        if (options && ($.type(options) == 'string') ){
-            options = options.split("'").join('"');
-            try {
-                var newOptions = JSON.parse( options );
-                if ($.type( newOptions ) == 'object')
-                    options = newOptions;
-            }
-            catch (e) {
-                options = null;
-            }
-        }
-console.log('_vfGetOptions',  options );
-        return options;
-*/
+        return JSON.parse( this.attr('data-'+dataId_options ) || '""' );
     };
 
     //jQuery.fn._vfUpdate()
     $.fn._vfUpdate = function() {
         var format = this._vfGetFormat(),
             options = this._vfGetOptions(),
-//HER            value = format.convertBack( this.data( dataId_value ), options );
             value = format.convertBack( JSON.parse( this.attr( 'data-'+dataId_value ) || '""'), options );
 
         if (value !== undefined){
