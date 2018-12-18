@@ -60,7 +60,7 @@
             this.vfOptions( options, true );
 		return this.each(function() {
             var $this = $(this);
-            $this.attr( 'data-'+dataId_format, id )
+            $this.attr( 'data-'+dataId_format, id );
 //HER            $this.data( dataId_format, id );
             if (!dontUpdate)
                 $this._vfUpdate();
@@ -80,7 +80,7 @@
 //HERconsole.log('vfValue', value, JSON.stringify( format.convert( value, options ) ) );
             $this
 //HER               .data( dataId_value, format.convert( value, options ) )
-                $this.attr( 'data-'+dataId_value, JSON.stringify( format.convert( value, options ) ) )
+                .attr( 'data-'+dataId_value, JSON.stringify( format.convert( value, options ) ) )
                 ._vfUpdate();
 		});
 	};
@@ -129,7 +129,7 @@
         var options = JSON.parse( this.attr('data-'+dataId_options ) || '""' );
 //HERconsole.log('_vfGetOptions',  options );
         return options;
-
+/*HER
         var options = this.data( dataId_options ) || {};
 
         //Convert options (if any) from string to json-object
@@ -146,6 +146,7 @@
         }
 console.log('_vfGetOptions',  options );
         return options;
+*/
     };
 
     //jQuery.fn._vfUpdate()
