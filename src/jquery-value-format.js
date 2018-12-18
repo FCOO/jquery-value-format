@@ -16,15 +16,17 @@
         dataId_value   = dataId_prefix + 'value',
         dataId_options = dataId_prefix + 'options';
 
+
     function defaultConvert( value ){ return value; }
 
+    /*
     var fallbackFormat = {
             id         : 'dummy',
             convert    : defaultConvert,
             convertBack: defaultConvert,
-            format     : function( value /*, options */) { return '** UNKNOWN FORMAT FOR "' + value + '" **'; }
+            format     : function( value , options ) { return '** UNKNOWN FORMAT FOR "' + value + '" **'; }
         };
-
+    */
     //Create valueFormat-namespace
 	$.valueFormat = $.valueFormat || {};
 
@@ -126,7 +128,7 @@
     //jQuery.fn._vfGetFormat()
     $.fn._vfGetFormat = function() {
         var formatId = this.attr( 'data-'+dataId_format );
-        return $.valueFormat.formats && formatId ? $.valueFormat.formats[formatId] || fallbackFormat : fallbackFormat;
+        return formatId && $.valueFormat.formats ? $.valueFormat.formats[formatId] : null;
     };
 
     //jQuery.fn._vfGetOptions()
@@ -138,7 +140,7 @@
     $.fn._vfUpdate = function() {
         var format = this._vfGetFormat(),
             options = this._vfGetOptions(),
-            value = format.convertBack( JSON.parse( this.attr( 'data-'+dataId_value ) || '""'), options );
+            value = format ? format.convertBack( JSON.parse( this.attr( 'data-'+dataId_value ) || '""'), options ) : undefined;
 
         if (value !== undefined){
             value = format.format( value, options );
