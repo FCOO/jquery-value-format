@@ -71,6 +71,9 @@ Sets the format of the selected elements and update them
 #### `jQuery.fn.vfValue( value, options )`
 Sets the value of the selected elements and update them
 
+#### `jQuery.fn.vfValue()`
+Return the value of the selected element
+
 #### `jQuery.fn.vfOptions( options )`
 Sets the options of the selected elements and update them
 

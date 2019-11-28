@@ -74,19 +74,28 @@
 	};
 
     //*********************************************************************
-    //jQuery.fn.vfValue( value ): Sets the value of the selected elements and update them
+    //jQuery.fn.vfValue( value ):
+    //(value[,options]): Sets the value of the selected elements and update them
+    //(): Return the raw value
 	$.fn.vfValue = function( value, options ) {
-        if (options)
-            this.vfOptions( options, true );
-		return this.each(function() {
-            var $this = $(this),
-                format = $this._vfGetFormat(),
-                options = $this._vfGetOptions();
-
-            $this
-                .attr( 'data-'+dataId_value, JSON.stringify( format.convert( value, options ) ) )
-                ._vfUpdate();
-		});
+        if (arguments.length){
+            if (options)
+                this.vfOptions( options, true );
+                return this.each(function() {
+                var $this = $(this),
+                    format = $this._vfGetFormat(),
+                    options = $this._vfGetOptions();
+                $this
+                    .attr( 'data-'+dataId_value, JSON.stringify( format.convert( value, options ) ) )
+                    ._vfUpdate();
+            });
+        }
+        else {
+            var format = this._vfGetFormat(),
+            _options = this._vfGetOptions(),
+            rawValue = JSON.parse( this.attr( 'data-'+dataId_value ) || '""');
+            return format ? format.convertBack( rawValue, _options ) : rawValue;
+        }
 	};
 
     //*********************************************************************

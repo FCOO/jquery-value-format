@@ -68,10 +68,12 @@
 
             $('#test1').vfValue('Nu bliver det spændende...');
             $('#test2').vfFormat('TEST2');
-            var m = { value: 12345 };
-            $('#object1')
-                .vfFormat('OBJECT')
-                .vfValue( m );
+            var m = { value: 12345 },
+                $elem = $('#object1');
+            $elem.vfFormat('OBJECT')
+                 .vfValue( m );
+            console.log($elem.vfValue());
+
             $('#object2')
                 .vfValue( m );
 
